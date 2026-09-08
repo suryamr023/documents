@@ -2,121 +2,602 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>User Profile & Documents</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  <title>Surya M R | Profile Details & Verified Documents</title>
   <style>
+    /* Light Theme (Default) */
     :root {
-      --primary: #2563eb;
-      --primary-hover: #1d4ed8;
+      --primary: #4f46e5;
+      --primary-hover: #4338ca;
+      --accent: #06b6d4;
+      --verified-blue: #0284c7;
+      --success-green: #10b981;
       --bg: #f8fafc;
-      --card-bg: #ffffff;
-      --text: #1e293b;
+      --surface: #ffffff;
+      --surface-subtle: #f1f5f9;
+      --surface-hover: #e2e8f0;
+      --text-main: #0f172a;
       --text-muted: #64748b;
-      --border: #e2e8f0;
+      --divider: #f1f5f9;
+      --shadow-soft: 0 10px 30px -5px rgba(0, 0, 0, 0.05), 0 4px 12px -2px rgba(0, 0, 0, 0.03);
+      --shadow-card: 0 14px 34px -4px rgba(15, 23, 42, 0.06);
+      --radius: 20px;
+      --blob-opacity: 0.45;
+    }
+
+    /* Auto Dark Theme based on device settings */
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #090d16;
+        --surface: #111827;
+        --surface-subtle: #1a2333;
+        --surface-hover: #222e42;
+        --text-main: #f8fafc;
+        --text-muted: #94a3b8;
+        --divider: #1e293b;
+        --verified-blue: #38bdf8;
+        --shadow-soft: 0 10px 30px -5px rgba(0, 0, 0, 0.5);
+        --shadow-card: 0 14px 34px -4px rgba(0, 0, 0, 0.6);
+        --blob-opacity: 0.22;
+      }
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      border: none;
+      outline: none;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, Helvetica, Arial, sans-serif;
+      transition: background-color 0.25s ease, color 0.2s ease, transform 0.2s ease;
+    }
+
+    html, body {
+      width: 100%;
+      min-height: 100%;
+      overflow-x: hidden;
     }
 
     body {
       background-color: var(--bg);
-      color: var(--text);
-      padding: 2rem 1rem;
+      color: var(--text-main);
+      padding: clamp(1rem, 4vw, 2.5rem) clamp(0.75rem, 3vw, 1rem);
       line-height: 1.5;
+      position: relative;
+    }
+
+    .bg-blobs {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    .blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: var(--blob-opacity);
+    }
+
+    .blob-1 {
+      width: clamp(280px, 40vw, 450px);
+      height: clamp(280px, 40vw, 450px);
+      background: radial-gradient(circle, #6366f1 0%, rgba(99, 102, 241, 0) 70%);
+      top: -60px;
+      right: -60px;
+    }
+
+    .blob-2 {
+      width: clamp(260px, 35vw, 400px);
+      height: clamp(260px, 35vw, 400px);
+      background: radial-gradient(circle, #06b6d4 0%, rgba(6, 182, 212, 0) 70%);
+      bottom: 5%;
+      left: -80px;
     }
 
     .container {
+      width: 100%;
       max-width: 900px;
       margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
     }
 
-    .header {
-      margin-bottom: 2rem;
-      text-align: center;
+    .profile-card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: clamp(1.25rem, 3vw, 2.2rem);
+      box-shadow: var(--shadow-card);
+      position: relative;
+      backdrop-filter: blur(16px);
+      width: 100%;
     }
 
-    .header h1 {
-      font-size: 2rem;
-      font-weight: 700;
-      color: var(--text);
-    }
-
-    .header p {
-      color: var(--text-muted);
-    }
-
-    .card {
-      background: var(--card-bg);
-      border-radius: 12px;
-      padding: 1.75rem;
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
-      border: 1px solid var(--border);
-      margin-bottom: 2rem;
-    }
-
-    .card h2 {
-      font-size: 1.25rem;
-      margin-bottom: 1.25rem;
-      border-bottom: 2px solid var(--border);
-      padding-bottom: 0.5rem;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    /* Hero Banner */
+    .hero-card {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       gap: 1.25rem;
+      background: linear-gradient(135deg, var(--surface) 0%, var(--surface-subtle) 100%);
+      overflow: hidden;
     }
 
-    .detail-item .label {
-      font-size: 0.85rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
+    .hero-left {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      min-width: 0;
+    }
+
+    .avatar-wrapper {
+      position: relative;
+      display: inline-block;
+      flex-shrink: 0;
+    }
+
+    .avatar {
+      width: clamp(64px, 10vw, 80px);
+      height: clamp(64px, 10vw, 80px);
+      background: linear-gradient(135deg, #4f46e5 0%, #06b6d4 100%);
+      color: #ffffff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: clamp(1.4rem, 2.5vw, 1.8rem);
+      font-weight: 700;
+      box-shadow: 0 10px 22px rgba(79, 70, 229, 0.32);
+    }
+
+    .avatar-badge {
+      position: absolute;
+      bottom: -2px;
+      right: -2px;
+      background: var(--surface);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 26px;
+      height: 26px;
+      color: var(--verified-blue);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.14);
+    }
+
+    .avatar-badge svg {
+      width: 22px;
+      height: 22px;
+    }
+
+    .hero-text {
+      min-width: 0;
+    }
+
+    .hero-text h1 {
+      font-size: clamp(1.35rem, 3.5vw, 1.85rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--text-main);
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .hero-text p {
       color: var(--text-muted);
-      margin-bottom: 0.25rem;
+      font-size: clamp(0.85rem, 1.8vw, 0.95rem);
+      font-weight: 500;
+      margin-top: 0.15rem;
     }
 
-    .detail-item .value {
-      font-weight: 600;
-      font-size: 1rem;
-    }
-
-    .doc-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 1rem;
-    }
-
-    .doc-button {
+    /* Digitally Verified Stamp */
+    .hero-stamp {
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      background: #f1f5f9;
-      border: 2px dashed #cbd5e1;
+      padding: 0.65rem 0.9rem;
+      background: var(--surface);
+      border-radius: 14px;
+      box-shadow: var(--shadow-soft);
+      gap: 0.3rem;
+      flex-shrink: 0;
+    }
+
+    .hero-stamp svg {
+      width: 24px;
+      height: 24px;
+      color: var(--verified-blue);
+      flex-shrink: 0;
+    }
+
+    .hero-stamp span {
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    /* Stat Chips Bar */
+    .stat-bar {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 1rem;
+      width: 100%;
+    }
+
+    .stat-chip {
+      background: var(--surface);
+      border-radius: 16px;
+      padding: 1rem 1.1rem;
+      box-shadow: var(--shadow-card);
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      min-width: 0;
+    }
+
+    .stat-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: var(--surface-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary);
+      flex-shrink: 0;
+    }
+
+    .stat-icon svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .stat-meta {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    .stat-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .stat-value {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    /* Section Headers */
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .header-icon-box {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, rgba(79, 70, 229, 0.15) 0%, rgba(6, 182, 212, 0.15) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary);
+      flex-shrink: 0;
+    }
+
+    .header-icon-box svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .section-header h2 {
+      font-size: 1.18rem;
+      font-weight: 700;
+      color: var(--text-main);
+      letter-spacing: -0.01em;
+    }
+
+    /* Details Rows */
+    .details-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      width: 100%;
+    }
+
+    .detail-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem 0.85rem;
+      border-radius: 12px;
+      gap: 1rem;
+      width: 100%;
+    }
+
+    .detail-row:hover {
+      background: var(--surface-subtle);
+    }
+
+    .row-lead {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-shrink: 0;
+    }
+
+    .row-graphic-icon {
+      width: 32px;
+      height: 32px;
       border-radius: 8px;
-      padding: 1.25rem;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      text-align: center;
+      background: var(--surface-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      flex-shrink: 0;
     }
 
-    .doc-button:hover {
-      background: #e2e8f0;
-      border-color: var(--primary);
+    .detail-row:hover .row-graphic-icon {
+      color: var(--primary);
+      background: var(--surface);
     }
 
-    .doc-icon {
-      font-size: 2rem;
-      margin-bottom: 0.5rem;
+    .row-graphic-icon svg {
+      width: 16px;
+      height: 16px;
     }
 
-    .doc-title {
+    .detail-label {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    .detail-value {
       font-size: 0.95rem;
       font-weight: 600;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      text-align: right;
+      min-width: 0;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .mono-pill {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      background: var(--surface-subtle);
+      padding: 0.35rem 0.65rem;
+      border-radius: 8px;
+      letter-spacing: 0.02em;
+      word-break: break-all;
+    }
+
+    .action-icons {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.2rem;
+      flex-shrink: 0;
+    }
+
+    .icon-btn {
+      background: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      width: 36px;
+      height: 36px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      flex-shrink: 0;
+    }
+
+    .icon-btn:hover {
+      color: var(--primary);
+      background: var(--surface-hover);
+      transform: scale(1.05);
+    }
+
+    .icon-btn svg {
+      width: 17px;
+      height: 17px;
+    }
+
+    .phone-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+      text-align: right;
+    }
+
+    /* 3-Line Address Stack */
+    .address-stack {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      text-align: right;
+      gap: 0.15rem;
+      line-height: 1.45;
+    }
+
+    .map-action-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.45rem 0.85rem;
+      background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
+      color: #ffffff;
+      border-radius: 10px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(79, 70, 229, 0.2);
+      flex-shrink: 0;
+    }
+
+    .map-action-pill:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 14px rgba(79, 70, 229, 0.3);
+    }
+
+    .map-action-pill svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    /* Documents Shelf */
+    .doc-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1rem;
+      margin-top: 0.5rem;
+      width: 100%;
+    }
+
+    .doc-card {
+      background: var(--surface-subtle);
+      border-radius: 16px;
+      padding: 1.3rem 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+    }
+
+    .doc-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #4f46e5, #06b6d4);
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+
+    .doc-card:hover {
+      transform: translateY(-3px);
+      background: var(--surface);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .doc-card:hover::before {
+      opacity: 1;
+    }
+
+    .doc-graphic-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 14px;
+      background: var(--surface);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0.75rem;
+      color: var(--primary);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+    }
+
+    .doc-graphic-icon svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    .doc-name {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 0.25rem;
+    }
+
+    .doc-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+      white-space: nowrap;
+    }
+
+    .doc-badge svg {
+      width: 14px;
+      height: 14px;
+      color: var(--verified-blue);
+      flex-shrink: 0;
+    }
+
+    .doc-buttons {
+      display: flex;
+      gap: 0.45rem;
+      width: 100%;
+    }
+
+    .doc-btn {
+      flex: 1;
+      padding: 0.5rem 0.55rem;
+      border-radius: 8px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      text-align: center;
+      text-decoration: none;
+      cursor: pointer;
+      background: var(--surface);
+      color: var(--text-main);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+      gap: 0.3rem;
+      min-height: 38px;
+    }
+
+    .doc-btn svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    .doc-btn.primary {
+      background: var(--primary);
+      color: #ffffff;
+      box-shadow: 0 3px 8px rgba(79, 70, 229, 0.25);
+    }
+
+    .doc-btn.primary:hover {
+      background: var(--primary-hover);
+    }
+
+    .doc-btn:hover:not(.primary) {
+      background: var(--surface-hover);
     }
 
     /* Modal Viewer */
@@ -124,12 +605,12 @@
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(15, 23, 42, 0.7);
-      backdrop-filter: blur(4px);
-      z-index: 100;
+      background: rgba(15, 23, 42, 0.65);
+      backdrop-filter: blur(8px);
+      z-index: 1000;
       align-items: center;
       justify-content: center;
-      padding: 1rem;
+      padding: clamp(0.5rem, 2vw, 1.25rem);
     }
 
     .modal.active {
@@ -137,61 +618,45 @@
     }
 
     .modal-content {
-      background: #ffffff;
+      background: var(--surface);
       width: 100%;
-      max-width: 850px;
-      height: 90vh;
-      border-radius: 12px;
+      max-width: 900px;
+      height: 85vh;
+      height: 85dvh;
+      border-radius: var(--radius);
       display: flex;
       flex-direction: column;
       overflow: hidden;
+      box-shadow: 0 24px 38px rgba(0, 0, 0, 0.22);
     }
 
     .modal-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 1rem 1.5rem;
-      border-bottom: 1px solid var(--border);
+      padding: 1rem 1.4rem;
+      border-bottom: 1px solid var(--divider);
+      flex-shrink: 0;
+    }
+
+    .modal-header h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     .modal-actions {
       display: flex;
-      gap: 0.75rem;
-    }
-
-    .btn {
-      padding: 0.5rem 1rem;
-      border-radius: 6px;
-      font-size: 0.875rem;
-      font-weight: 500;
-      text-decoration: none;
-      cursor: pointer;
-      border: none;
-      transition: background 0.2s;
-    }
-
-    .btn-primary {
-      background: var(--primary);
-      color: #ffffff;
-    }
-
-    .btn-primary:hover {
-      background: var(--primary-hover);
-    }
-
-    .btn-secondary {
-      background: #e2e8f0;
-      color: var(--text);
-    }
-
-    .btn-secondary:hover {
-      background: #cbd5e1;
+      gap: 0.5rem;
+      flex-shrink: 0;
     }
 
     .modal-body {
       flex: 1;
-      background: #525659;
+      background: var(--surface-subtle);
+      position: relative;
     }
 
     .modal-body iframe {
@@ -199,94 +664,639 @@
       height: 100%;
       border: none;
     }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      max-width: calc(100vw - 48px);
+      background: #0f172a;
+      color: #ffffff;
+      padding: 0.75rem 1.25rem;
+      border-radius: 12px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.25s ease, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 2000;
+      box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25);
+      pointer-events: none;
+    }
+
+    .toast svg {
+      width: 17px;
+      height: 17px;
+      color: var(--success-green);
+      flex-shrink: 0;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    footer {
+      text-align: center;
+      padding: 1.5rem 0 0.5rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    /* Robust Responsive Layout for Mobile & Tablets */
+    @media (max-width: 768px) {
+      .hero-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+      }
+      .hero-stamp {
+        display: flex !important;
+        flex-direction: row;
+        align-self: flex-start;
+        gap: 0.45rem;
+        padding: 0.45rem 0.8rem;
+      }
+      .hero-stamp svg {
+        width: 18px;
+        height: 18px;
+      }
+      .hero-stamp span {
+        font-size: 0.72rem;
+      }
+      .detail-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.4rem;
+        padding: 0.85rem 0.5rem;
+      }
+      .detail-value {
+        width: 100%;
+        justify-content: space-between;
+        text-align: left;
+      }
+      .phone-stack, .address-stack {
+        align-items: flex-start;
+        text-align: left;
+      }
+      .stat-bar {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
   </style>
 </head>
 <body>
 
+  <div class="bg-blobs">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+  </div>
+
   <div class="container">
-    <div class="header">
-      <h1>Candidate Profile</h1>
-      <p>Digitized Identification & Educational Records</p>
-    </div>
-
-    <!-- Personal Info Card -->
-    <div class="card">
-      <h2>Personal Information</h2>
-      <div class="grid">
-        <div class="detail-item">
-          <div class="label">Full Name</div>
-          <div class="value">Surya M R</div>
+    
+    <!-- Hero Banner -->
+    <header class="profile-card hero-card">
+      <div class="hero-left">
+        <div class="avatar-wrapper">
+          <div class="avatar">SR</div>
+          <div class="avatar-badge" title="Verified Profile">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+              <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            </svg>
+          </div>
         </div>
-        <div class="detail-item">
-          <div class="label">Date of Birth</div>
-          <div class="value">02-03-2005</div>
-        </div>
-        <div class="detail-item">
-          <div class="label">Gender</div>
-          <div class="value">Male</div>
-        </div>
-        <div class="detail-item">
-          <div class="label">Father's Name</div>
-          <div class="value">Ramachandran</div>
-        </div>
-        <div class="detail-item">
-          <div class="label">Blood Group</div>
-          <div class="value">O+</div>
-        </div>
-        <div class="detail-item">
-          <div class="label">PAN Number</div>
-          <div class="value">RPAPS8681P</div>
-        </div>
-        <div class="detail-item">
-          <div class="label">Driving Licence No.</div>
-          <div class="value">TN36W20250001447</div>
-        </div>
-        <div class="detail-item">
-          <div class="label">SSLC Reg No.</div>
-          <div class="value">XM20R0444315961</div>
-        </div>
-        <div class="detail-item" style="grid-column: 1 / -1;">
-          <div class="label">Address</div>
-          <div class="value">Olagadam Via, Mathur, Anthiyur, Erode, Tamil Nadu - 638314</div>
+        <div class="hero-text">
+          <h1>Surya M R</h1>
+          <p>Profile Details &amp; Verified Documents</p>
         </div>
       </div>
-    </div>
 
-    <!-- Documents Section -->
-    <div class="card">
-      <h2>Available Documents (Click to View / Download)</h2>
+      <!-- Digitally Verified Stamp -->
+      <div class="hero-stamp">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+          <polyline points="9 12 11 14 15 10"></polyline>
+        </svg>
+        <span>Digitally Verified</span>
+      </div>
+    </header>
+
+    <!-- Stat Chips Bar -->
+    <section class="stat-bar">
+      <div class="stat-chip">
+        <div class="stat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
+        </div>
+        <div class="stat-meta">
+          <span class="stat-label">Calculated Age</span>
+          <span class="stat-value" id="user-age">--</span>
+        </div>
+      </div>
+
+      <div class="stat-chip">
+        <div class="stat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+        </div>
+        <div class="stat-meta">
+          <span class="stat-label">Gender</span>
+          <span class="stat-value">Male</span>
+        </div>
+      </div>
+
+      <div class="stat-chip">
+        <div class="stat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+          </svg>
+        </div>
+        <div class="stat-meta">
+          <span class="stat-label">Blood Group</span>
+          <span class="stat-value">O+</span>
+        </div>
+      </div>
+
+      <div class="stat-chip">
+        <div class="stat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="2" y1="12" x2="22" y2="12"></line>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+          </svg>
+        </div>
+        <div class="stat-meta">
+          <span class="stat-label">Nationality</span>
+          <span class="stat-value">Indian</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Basic Identity Section -->
+    <section class="profile-card">
+      <div class="section-header">
+        <div class="header-icon-box">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+            <circle cx="8.5" cy="7" r="4"></circle>
+            <polyline points="17 11 19 13 23 9"></polyline>
+          </svg>
+        </div>
+        <h2>Basic Identity</h2>
+      </div>
+
+      <div class="details-list">
+        <div class="detail-row">
+          <div class="row-lead">
+            <div class="row-graphic-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+            </div>
+            <span class="detail-label">Full Name</span>
+          </div>
+          <span class="detail-value">Surya M R</span>
+        </div>
+
+        <div class="detail-row">
+          <div class="row-lead">
+            <div class="row-graphic-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+              </svg>
+            </div>
+            <span class="detail-label">Father's Name</span>
+          </div>
+          <span class="detail-value">Ramachandran</span>
+        </div>
+
+        <div class="detail-row">
+          <div class="row-lead">
+            <div class="row-graphic-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M12 8v8"></path>
+                <path d="M8 12h8"></path>
+              </svg>
+            </div>
+            <span class="detail-label">Gender</span>
+          </div>
+          <span class="detail-value">Male</span>
+        </div>
+
+        <div class="detail-row">
+          <div class="row-lead">
+            <div class="row-graphic-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+              </svg>
+            </div>
+            <span class="detail-label">Date of Birth</span>
+          </div>
+          <span class="detail-value">02/Mar/2005</span>
+        </div>
+
+        <div class="detail-row">
+          <div class="row-lead">
+            <div class="row-graphic-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+            </div>
+            <span class="detail-label">Calculated Age</span>
+          </div>
+          <span class="detail-value" id="user-age-detail">--</span>
+        </div>
+
+        <div class="detail-row">
+          <div class="row-lead">
+            <div class="row-graphic-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path>
+              </svg>
+            </div>
+            <span class="detail-label">Blood Group</span>
+          </div>
+          <span class="detail-value">O+</span>
+        </div>
+
+        <div class="detail-row">
+          <div class="row-lead">
+            <div class="row-graphic-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="2" y1="12" x2="22" y2="12"></line>
+                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+              </svg>
+            </div>
+            <span class="detail-label">Nationality</span>
+          </div>
+          <span class="detail-value">Indian</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Information Section -->
+    <section class="profile-card">
+      <div class="section-header">
+        <div class="header-icon-box">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+          </svg>
+        </div>
+        <h2>Contact Information</h2>
+      </div>
+
+      <div class="details-list">
+        <div class="detail-row">
+          <div class="row-lead">
+            <div class="row-graphic-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+              </svg>
+            </div>
+            <span class="detail-label">Email Address</span>
+          </div>
+          <span class="detail-value">suryamr023@gmail.com</span>
+        </div>
+
+        <div class="detail-row">
+          <div class="row-lead">
+            <div class="row-graphic-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
+                <line x1="12" y1="18" x2="12.01" y2="18"></line>
+              </svg>
+            </div>
+            <span class="detail-label">Mobile Numbers</span>
+          </div>
+          <div class="detail-value">
+            <div class="phone-stack">
+              <span>+91 7603812426</span>
+              <span>+91 7603912426</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Address in exact 3 lines -->
+        <div class="detail-row">
+          <div class="row-lead">
+            <div class="row-graphic-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path>
+                <circle cx="12" cy="10" r="3"></circle>
+              </svg>
+            </div>
+            <span class="detail-label">Address</span>
+          </div>
+          <div class="detail-value">
+            <div class="address-stack">
+              <span>395/MATHUR, MATHUR (PO),</span>
+              <span>OLAGADAM (VIA), ANTHIYUR (TK),</span>
+              <span>ERODE (DT) - 638314</span>
+              <button class="map-action-pill" onclick="openDeviceMap('11.629387', '77.616402', '395/Mathur, Erode')" title="Open in Native Map" style="margin-top: 0.35rem;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="3 11 22 2 13 21 11 13 3 11"></polygon>
+                </svg>
+                Open in Maps
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Government IDs Section -->
+    <section class="profile-card">
+      <div class="section-header">
+        <div class="header-icon-box">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="4" width="18" height="16" rx="2"></rect>
+            <line x1="7" y1="8" x2="17" y2="8"></line>
+            <line x1="7" y1="12" x2="13" y2="12"></line>
+            <circle cx="16" cy="14" r="2"></circle>
+          </svg>
+        </div>
+        <h2>Government ID's &amp; Official Records</h2>
+      </div>
+
+      <div class="details-list">
+        <!-- PAN Number -->
+        <div class="detail-row">
+          <div class="row-lead">
+            <div class="row-graphic-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="5" width="20" height="14" rx="2"></rect>
+                <line x1="2" y1="10" x2="22" y2="10"></line>
+              </svg>
+            </div>
+            <span class="detail-label">PAN Number</span>
+          </div>
+          <div class="detail-value">
+            <span class="mono-pill" id="val-pan">RP•••••81P</span>
+            <div class="action-icons">
+              <button class="icon-btn" onclick="toggleField('pan', 'RPAPS8681P', 'RP•••••81P')" title="View / Hide">
+                <svg id="eye-pan" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                  <line x1="1" y1="1" x2="23" y2="23"></line>
+                </svg>
+              </button>
+              <button class="icon-btn" onclick="copyValue('RPAPS8681P')" title="Copy PAN">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Aadhaar Number -->
+        <div class="detail-row">
+          <div class="row-lead">
+            <div class="row-graphic-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 11c0 3-1.5 5-3 6.5"></path>
+                <path d="M12 3a9 9 0 0 0-9 9c0 4 1.5 6 3 7.5"></path>
+                <path d="M12 7a5 5 0 0 0-5 5c0 2.5 1 4 2 5"></path>
+                <path d="M12 15a1 1 0 0 0 1-1c0-2-1-3-2-4"></path>
+                <path d="M21 12a9 9 0 0 0-6.5-8.6"></path>
+                <path d="M19.5 15.5A9 9 0 0 0 21 12"></path>
+              </svg>
+            </div>
+            <span class="detail-label">Aadhaar Number</span>
+          </div>
+          <div class="detail-value">
+            <span class="mono-pill" id="val-aadhaar">90•• •••• •760</span>
+            <div class="action-icons">
+              <!-- Replace [Aadhaar Redacted] in your local copy with your full 12-digit number before deploying -->
+              <button class="icon-btn" onclick="toggleField('aadhaar', '9004 5471 8760', '90•• •••• •760')" title="View / Hide">
+                <svg id="eye-aadhaar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                  <line x1="1" y1="1" x2="23" y2="23"></line>
+                </svg>
+              </button>
+              <button class="icon-btn" onclick="copyValue('[Aadhaar Redacted]')" title="Copy Aadhaar">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Driving Licence -->
+        <div class="detail-row">
+          <div class="row-lead">
+            <div class="row-graphic-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <circle cx="12" cy="12" r="3"></circle>
+                <line x1="12" y1="2" x2="12" y2="9"></line>
+                <line x1="3.5" y1="17" x2="9.5" y2="13.5"></line>
+                <line x1="20.5" y1="17" x2="14.5" y2="13.5"></line>
+              </svg>
+            </div>
+            <span class="detail-label">Driving Licence No</span>
+          </div>
+          <div class="detail-value">
+            <span class="mono-pill" id="val-dl">TN••••••••••447</span>
+            <div class="action-icons">
+              <button class="icon-btn" onclick="toggleField('dl', 'TN36W20250001447', 'TN••••••••••447')" title="View / Hide">
+                <svg id="eye-dl" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                  <line x1="1" y1="1" x2="23" y2="23"></line>
+                </svg>
+              </button>
+              <button class="icon-btn" onclick="copyValue('TN36W20250001447')" title="Copy DL">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- SSLC Register No -->
+        <div class="detail-row">
+          <div class="row-lead">
+            <div class="row-graphic-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+              </svg>
+            </div>
+            <span class="detail-label">SSLC Reg No</span>
+          </div>
+          <div class="detail-value">
+            <span class="mono-pill" id="val-sslc">XM••••••••••961</span>
+            <div class="action-icons">
+              <button class="icon-btn" onclick="toggleField('sslc', 'XM20R0444315961', 'XM•••••••••961')" title="View / Hide">
+                <svg id="eye-sslc" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                  <line x1="1" y1="1" x2="23" y2="23"></line>
+                </svg>
+              </button>
+              <button class="icon-btn" onclick="copyValue('XM20R0444315961')" title="Copy Reg No">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Verified Documents Shelf -->
       <div class="doc-grid">
-        <div class="doc-button" onclick="openDoc('SSLC Certificate', 'SSLC.pdf')">
-          <div class="doc-icon">🎓</div>
-          <div class="doc-title">SSLC Marksheet</div>
+        <!-- SSLC -->
+        <div class="doc-card">
+          <div class="doc-graphic-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+              <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+            </svg>
+          </div>
+          <div class="doc-name">SSLC Marksheet</div>
+          <div class="doc-badge">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"></path>
+            </svg>
+            Board Verified
+          </div>
+          <div class="doc-buttons">
+            <button class="doc-btn primary" onclick="openDoc('SSLC Marksheet', 'SSLC.pdf')">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+              View
+            </button>
+            <a class="doc-btn" href="SSLC.pdf" download="SSLC.pdf">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+              Get
+            </a>
+          </div>
         </div>
 
-        <div class="doc-button" onclick="openDoc('PAN Verification', 'PAN_.pdf')">
-          <div class="doc-icon">💳</div>
-          <div class="doc-title">PAN Card</div>
+        <!-- PAN -->
+        <div class="doc-card">
+          <div class="doc-graphic-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="5" width="20" height="14" rx="2"></rect>
+              <line x1="2" y1="10" x2="22" y2="10"></line>
+              <circle cx="7" cy="15" r="1.5"></circle>
+              <line x1="12" y1="15" x2="18" y2="15"></line>
+            </svg>
+          </div>
+          <div class="doc-name">PAN Card</div>
+          <div class="doc-badge">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"></path>
+            </svg>
+            DigiLocker Verified
+          </div>
+          <div class="doc-buttons">
+            <button class="doc-btn primary" onclick="openDoc('PAN Card', 'PAN_.pdf')">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+              View
+            </button>
+            <a class="doc-btn" href="PAN_.pdf" download="PAN_.pdf">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+              Get
+            </a>
+          </div>
         </div>
 
-        <div class="doc-button" onclick="openDoc('Aadhaar Document', 'AADHAR.pdf')">
-          <div class="doc-icon">🆔</div>
-          <div class="doc-title">Aadhaar Card</div>
+        <!-- Aadhaar -->
+        <div class="doc-card">
+          <div class="doc-graphic-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+          </div>
+          <div class="doc-name">Aadhaar Card</div>
+          <div class="doc-badge">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"></path>
+            </svg>
+            UIDAI Verified
+          </div>
+          <div class="doc-buttons">
+            <button class="doc-btn primary" onclick="openDoc('Aadhaar Card', 'AADHAR.pdf')">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+              View
+            </button>
+            <a class="doc-btn" href="AADHAR.pdf" download="AADHAR.pdf">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+              Get
+            </a>
+          </div>
         </div>
 
-        <div class="doc-button" onclick="openDoc('Driving Licence', 'DRIVING LICENCE.pdf')">
-          <div class="doc-icon">🚗</div>
-          <div class="doc-title">Driving Licence</div>
+        <!-- Driving Licence -->
+        <div class="doc-card">
+          <div class="doc-graphic-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <circle cx="12" cy="12" r="4"></circle>
+            </svg>
+          </div>
+          <div class="doc-name">Driving Licence</div>
+          <div class="doc-badge">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"></path>
+            </svg>
+            RTO Verified
+          </div>
+          <div class="doc-buttons">
+            <button class="doc-btn primary" onclick="openDoc('Driving Licence', 'DRIVING LICENCE.pdf')">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+              View
+            </button>
+            <a class="doc-btn" href="DRIVING LICENCE.pdf" download="DRIVING LICENCE.pdf">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+              Get
+            </a>
+          </div>
         </div>
       </div>
-    </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      &copy; 2026 Surya M R. All rights reserved.
+    </footer>
+
   </div>
 
   <!-- Document Viewer Modal -->
-  <div id="docModal" class="modal">
+  <div id="docModal" class="modal" role="dialog" aria-modal="true">
     <div class="modal-content">
       <div class="modal-header">
-        <h3 id="modalDocTitle">Document Title</h3>
+        <h3 id="modalDocTitle">Document Preview</h3>
         <div class="modal-actions">
-          <a id="downloadBtn" class="btn btn-primary" download>Download</a>
-          <button class="btn btn-secondary" onclick="closeDoc()">Close</button>
+          <a id="modalDownloadBtn" class="doc-btn primary" download>Download</a>
+          <button class="doc-btn" onclick="closeDoc()">Close</button>
         </div>
       </div>
       <div class="modal-body">
@@ -295,21 +1305,55 @@
     </div>
   </div>
 
+  <!-- Toast Notification -->
+  <div id="toast" class="toast">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="20 6 9 17 4 12"></polyline>
+    </svg>
+    <span id="toast-text">Copied to clipboard!</span>
+  </div>
+
   <script>
+    // Live Age Calculation from DOB (02/Mar/2005)
+    function calculateAge(birthDateString) {
+      const birthDate = new Date(birthDateString);
+      const today = new Date();
+      let age = today.getFullYear() - birthDate.getFullYear();
+      const monthDiff = today.getMonth() - birthDate.getMonth();
+      if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+      }
+      return age;
+    }
+    const computedAge = calculateAge('2005-03-02') + ' Yrs';
+    document.getElementById('user-age').innerText = computedAge;
+    document.getElementById('user-age-detail').innerText = computedAge;
+
+    // Platform-optimized Native Maps link
+    function openDeviceMap(lat, lng, label) {
+      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+      if (isIOS) {
+        window.location.href = `maps://maps.apple.com/?q=${encodeURIComponent(label)}&ll=${lat},${lng}`;
+      } else {
+        window.open(`https://www.google.com/maps/search/?api=1&query=${lat},${lng}`, '_blank');
+      }
+    }
+
+    // Modal Control
     function openDoc(title, fileName) {
       document.getElementById('modalDocTitle').innerText = title;
       document.getElementById('pdfFrame').src = fileName;
-      
-      const downloadBtn = document.getElementById('downloadBtn');
+      const downloadBtn = document.getElementById('modalDownloadBtn');
       downloadBtn.href = fileName;
       downloadBtn.setAttribute('download', fileName);
-      
       document.getElementById('docModal').classList.add('active');
+      document.body.style.overflow = 'hidden';
     }
 
     function closeDoc() {
       document.getElementById('docModal').classList.remove('active');
       document.getElementById('pdfFrame').src = '';
+      document.body.style.overflow = '';
     }
 
     window.onclick = function(event) {
@@ -318,6 +1362,74 @@
         closeDoc();
       }
     };
+
+    window.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeDoc();
+    });
+
+    // Vector Eye State Toggles
+    const eyeOpenSVG = '<path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle>';
+    const eyeClosedSVG = '<path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"></path><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"></path><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"></path><line x1="2" y1="2" x2="22" y2="22"></line>';
+
+    const fieldStates = {
+      pan: false,
+      aadhaar: false,
+      dl: false,
+      sslc: false
+    };
+
+    function toggleField(id, realValue, maskedValue) {
+      fieldStates[id] = !fieldStates[id];
+      const valElem = document.getElementById('val-' + id);
+      const eyeElem = document.getElementById('eye-' + id);
+
+      if (fieldStates[id]) {
+        valElem.innerText = realValue;
+        eyeElem.innerHTML = eyeOpenSVG;
+      } else {
+        valElem.innerText = maskedValue;
+        eyeElem.innerHTML = eyeClosedSVG;
+      }
+    }
+
+    // 1-Click Clipboard Copy with Feedback
+    let toastTimeout;
+    function copyValue(val) {
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(val).then(() => {
+          showToast('Copied to clipboard!');
+        }).catch(() => fallbackCopy(val));
+      } else {
+        fallbackCopy(val);
+      }
+    }
+
+    function fallbackCopy(val) {
+      const textArea = document.createElement("textarea");
+      textArea.value = val;
+      textArea.style.position = "fixed";
+      textArea.style.opacity = "0";
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+      try {
+        document.execCommand('copy');
+        showToast('Copied to clipboard!');
+      } catch (err) {
+        showToast('Unable to copy');
+      }
+      document.body.removeChild(textArea);
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      document.getElementById('toast-text').innerText = msg;
+      toast.classList.add('show');
+      clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        toast.classList.remove('show');
+      }, 2200);
+    }
   </script>
 </body>
 </html>
