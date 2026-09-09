@@ -5,41 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
   <title>Surya M R | Profile Details & Verified Documents</title>
   <style>
-    /* Light Theme (Default) */
+    /* Fixed Light Theme (Light green accent with clean white background) */
     :root {
-      --primary: #4f46e5;
-      --primary-hover: #4338ca;
-      --accent: #06b6d4;
+      --primary: #059669;
+      --primary-hover: #047857;
+      --accent: #10b981;
       --verified-blue: #0284c7;
       --success-green: #10b981;
-      --bg: #f8fafc;
+      --bg: #f0fdf4;
       --surface: #ffffff;
-      --surface-subtle: #f1f5f9;
-      --surface-hover: #e2e8f0;
-      --text-main: #0f172a;
-      --text-muted: #64748b;
-      --divider: #f1f5f9;
-      --shadow-soft: 0 10px 30px -5px rgba(0, 0, 0, 0.05), 0 4px 12px -2px rgba(0, 0, 0, 0.03);
-      --shadow-card: 0 14px 34px -4px rgba(15, 23, 42, 0.06);
+      --surface-subtle: #f7fee7;
+      --surface-hover: #ecfdf5;
+      --text-main: #064e3b;
+      --text-muted: #047857;
+      --divider: #e2e8f0;
+      --shadow-soft: 0 10px 30px -5px rgba(5, 150, 105, 0.08), 0 4px 12px -2px rgba(5, 150, 105, 0.04);
+      --shadow-card: 0 14px 34px -4px rgba(6, 78, 59, 0.06);
       --radius: 20px;
-      --blob-opacity: 0.45;
-    }
-
-    /* Auto Dark Theme based on device settings */
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg: #090d16;
-        --surface: #111827;
-        --surface-subtle: #1a2333;
-        --surface-hover: #222e42;
-        --text-main: #f8fafc;
-        --text-muted: #94a3b8;
-        --divider: #1e293b;
-        --verified-blue: #38bdf8;
-        --shadow-soft: 0 10px 30px -5px rgba(0, 0, 0, 0.5);
-        --shadow-card: 0 14px 34px -4px rgba(0, 0, 0, 0.6);
-        --blob-opacity: 0.22;
-      }
+      --blob-opacity: 0.35;
     }
 
     * {
@@ -86,7 +69,7 @@
     .blob-1 {
       width: clamp(280px, 40vw, 450px);
       height: clamp(280px, 40vw, 450px);
-      background: radial-gradient(circle, #6366f1 0%, rgba(99, 102, 241, 0) 70%);
+      background: radial-gradient(circle, #34d399 0%, rgba(52, 211, 153, 0) 70%);
       top: -60px;
       right: -60px;
     }
@@ -94,7 +77,7 @@
     .blob-2 {
       width: clamp(260px, 35vw, 400px);
       height: clamp(260px, 35vw, 400px);
-      background: radial-gradient(circle, #06b6d4 0%, rgba(6, 182, 212, 0) 70%);
+      background: radial-gradient(circle, #6ee7b7 0%, rgba(110, 231, 183, 0) 70%);
       bottom: 5%;
       left: -80px;
     }
@@ -116,6 +99,7 @@
       position: relative;
       backdrop-filter: blur(16px);
       width: 100%;
+      border: 1px solid rgba(5, 150, 105, 0.08);
     }
 
     /* Hero Banner */
@@ -144,7 +128,7 @@
     .avatar {
       width: clamp(64px, 10vw, 80px);
       height: clamp(64px, 10vw, 80px);
-      background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+      background: linear-gradient(135deg, #059669 0%, #34d399 100%);
       color: #ffffff;
       border-radius: 50%;
       display: flex;
@@ -152,7 +136,7 @@
       justify-content: center;
       font-size: clamp(1.4rem, 2.5vw, 1.8rem);
       font-weight: 700;
-      box-shadow: 0 10px 22px rgba(79, 70, 229, 0.32);
+      box-shadow: 0 10px 22px rgba(5, 150, 105, 0.25);
     }
 
     .avatar-badge {
@@ -167,7 +151,7 @@
       width: 26px;
       height: 26px;
       color: var(--verified-blue);
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.14);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     }
 
     .avatar-badge svg {
@@ -203,11 +187,12 @@
       align-items: center;
       justify-content: center;
       padding: 0.65rem 0.9rem;
-      background: var(--surface);
+      background: var(--surface-subtle);
       border-radius: 14px;
       box-shadow: var(--shadow-soft);
       gap: 0.3rem;
       flex-shrink: 0;
+      border: 1px solid rgba(5, 150, 105, 0.08);
     }
 
     .hero-stamp svg {
@@ -238,7 +223,7 @@
       width: 36px;
       height: 36px;
       border-radius: 10px;
-      background: linear-gradient(135deg, rgba(79, 70, 229, 0.15) 0%, rgba(6, 182, 212, 0.15) 100%);
+      background: linear-gradient(135deg, rgba(5, 150, 105, 0.12) 0%, rgba(52, 211, 153, 0.12) 100%);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -278,6 +263,7 @@
       position: relative;
       overflow: hidden;
       width: 100%;
+      border: 1px solid rgba(5, 150, 105, 0.06);
     }
 
     .doc-card::before {
@@ -287,7 +273,7 @@
       left: 0;
       right: 0;
       height: 4px;
-      background: linear-gradient(90deg, #4f46e5, #06b6d4);
+      background: linear-gradient(90deg, #059669, #34d399);
       opacity: 0;
       transition: opacity 0.2s ease;
     }
@@ -296,6 +282,7 @@
       transform: translateY(-3px);
       background: var(--surface);
       box-shadow: var(--shadow-soft);
+      border-color: rgba(5, 150, 105, 0.2);
     }
 
     .doc-card:hover::before {
@@ -411,6 +398,7 @@
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
       gap: 0.3rem;
       min-height: 38px;
+      border: 1px solid rgba(5, 150, 105, 0.1);
     }
 
     .doc-btn svg {
@@ -421,7 +409,8 @@
     .doc-btn.primary {
       background: var(--primary);
       color: #ffffff;
-      box-shadow: 0 3px 8px rgba(79, 70, 229, 0.25);
+      box-shadow: 0 3px 8px rgba(5, 150, 105, 0.2);
+      border: none;
     }
 
     .doc-btn.primary:hover {
@@ -432,13 +421,78 @@
       background: var(--surface-hover);
     }
 
+    /* Modal Viewer */
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(6, 78, 59, 0.4);
+      backdrop-filter: blur(8px);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(0.5rem, 2vw, 1.25rem);
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: var(--surface);
+      width: 100%;
+      max-width: 900px;
+      height: 85vh;
+      height: 85dvh;
+      border-radius: var(--radius);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: 0 24px 38px rgba(0, 0, 0, 0.15);
+      border: 1px solid rgba(5, 150, 105, 0.1);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 1.4rem;
+      border-bottom: 1px solid var(--divider);
+      flex-shrink: 0;
+    }
+
+    .modal-header h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 0.5rem;
+      flex-shrink: 0;
+    }
+
+    .modal-body {
+      flex: 1;
+      background: var(--surface-subtle);
+    }
+
+    .modal-body iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
     /* Toast Notification */
     .toast {
       position: fixed;
       bottom: 24px;
       right: 24px;
       max-width: calc(100vw - 48px);
-      background: #0f172a;
+      background: #064e3b;
       color: #ffffff;
       padding: 0.75rem 1.25rem;
       border-radius: 12px;
@@ -451,7 +505,7 @@
       transform: translateY(12px);
       transition: opacity 0.25s ease, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
       z-index: 2000;
-      box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25);
+      box-shadow: 0 14px 28px rgba(0, 0, 0, 0.15);
       pointer-events: none;
     }
 
@@ -587,10 +641,10 @@
             Board Verified
           </div>
           <div class="doc-buttons">
-            <a class="doc-btn primary" href="SSLC.pdf" target="_blank" rel="noopener noreferrer">
+            <button class="doc-btn primary" onclick="openDoc('SSLC Marksheet', 'SSLC.pdf')">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
               View
-            </a>
+            </button>
             <a class="doc-btn" href="SSLC.pdf" download="SSLC.pdf">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
               Get
@@ -634,10 +688,10 @@
             DigiLocker Verified
           </div>
           <div class="doc-buttons">
-            <a class="doc-btn primary" href="PAN_.pdf" target="_blank" rel="noopener noreferrer">
+            <button class="doc-btn primary" onclick="openDoc('PAN Card', 'PAN_.pdf')">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
               View
-            </a>
+            </button>
             <a class="doc-btn" href="PAN_.pdf" download="PAN_.pdf">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
               Get
@@ -660,7 +714,6 @@
           <div class="doc-num-container">
             <span class="doc-number-sub" id="docval-aadhaar">90•• •••• •760</span>
             <div class="doc-num-actions">
-              <!-- Replace 9004 5471 8760 in your local copy with your full 12-digit number before deploying -->
               <button class="doc-num-btn" onclick="toggleDocField('aadhaar', '9004 5471 8760', '90•• •••• •760')" title="View / Hide">
                 <svg id="doceye-aadhaar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
@@ -682,10 +735,10 @@
             UIDAI Verified
           </div>
           <div class="doc-buttons">
-            <a class="doc-btn primary" href="AADHAR.pdf" target="_blank" rel="noopener noreferrer">
+            <button class="doc-btn primary" onclick="openDoc('Aadhaar Card', 'AADHAR.pdf')">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
               View
-            </a>
+            </button>
             <a class="doc-btn" href="AADHAR.pdf" download="AADHAR.pdf">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
               Get
@@ -729,10 +782,10 @@
             RTO Verified
           </div>
           <div class="doc-buttons">
-            <a class="doc-btn primary" href="DRIVING LICENCE.pdf" target="_blank" rel="noopener noreferrer">
+            <button class="doc-btn primary" onclick="openDoc('Driving Licence', 'DRIVING LICENCE.pdf')">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
               View
-            </a>
+            </button>
             <a class="doc-btn" href="DRIVING LICENCE.pdf" download="DRIVING LICENCE.pdf">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
               Get
@@ -749,6 +802,22 @@
 
   </div>
 
+  <!-- Document Viewer Modal -->
+  <div id="docModal" class="modal" role="dialog" aria-modal="true">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="modalDocTitle">Document Preview</h3>
+        <div class="modal-actions">
+          <a id="modalDownloadBtn" class="doc-btn primary" download>Download</a>
+          <button class="doc-btn" onclick="closeDoc()">Close</button>
+        </div>
+      </div>
+      <div class="modal-body">
+        <iframe id="pdfFrame" src="" title="Document Preview"></iframe>
+      </div>
+    </div>
+  </div>
+
   <!-- Toast Notification -->
   <div id="toast" class="toast">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -758,9 +827,37 @@
   </div>
 
   <script>
+    // Modal Control
+    function openDoc(title, fileName) {
+      document.getElementById('modalDocTitle').innerText = title;
+      document.getElementById('pdfFrame').src = fileName;
+      const downloadBtn = document.getElementById('modalDownloadBtn');
+      downloadBtn.href = fileName;
+      downloadBtn.setAttribute('download', fileName);
+      document.getElementById('docModal').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeDoc() {
+      document.getElementById('docModal').classList.remove('active');
+      document.getElementById('pdfFrame').src = '';
+      document.body.style.overflow = '';
+    }
+
+    window.onclick = function(event) {
+      const modal = document.getElementById('docModal');
+      if (event.target === modal) {
+        closeDoc();
+      }
+    };
+
+    window.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeDoc();
+    });
+
     // Vector Eye State Toggles for Document Cards
     const eyeOpenSVG = '<path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle>';
-    const eyeClosedSVG = '<path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"></path><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"></path><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"></path><line x1="2" y1="2" x2="22" y2="22"></line>';
+    const eyeClosedSVG = '<path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"></path><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"></path><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"></path><line x1="1" y1="1" x2="23" y2="23"></line>';
 
     const docFieldStates = {
       sslc: false,
