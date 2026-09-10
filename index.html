@@ -421,71 +421,6 @@
       background: var(--surface-hover);
     }
 
-    /* Modal Viewer */
-    .modal {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(6, 78, 59, 0.4);
-      backdrop-filter: blur(8px);
-      z-index: 1000;
-      align-items: center;
-      justify-content: center;
-      padding: clamp(0.5rem, 2vw, 1.25rem);
-    }
-
-    .modal.active {
-      display: flex;
-    }
-
-    .modal-content {
-      background: var(--surface);
-      width: 100%;
-      max-width: 900px;
-      height: 85vh;
-      height: 85dvh;
-      border-radius: var(--radius);
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-      box-shadow: 0 24px 38px rgba(0, 0, 0, 0.15);
-      border: 1px solid rgba(5, 150, 105, 0.1);
-    }
-
-    .modal-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1rem 1.4rem;
-      border-bottom: 1px solid var(--divider);
-      flex-shrink: 0;
-    }
-
-    .modal-header h3 {
-      font-size: 1.05rem;
-      font-weight: 700;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-
-    .modal-actions {
-      display: flex;
-      gap: 0.5rem;
-      flex-shrink: 0;
-    }
-
-    .modal-body {
-      flex: 1;
-      background: var(--surface-subtle);
-    }
-
-    .modal-body iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
-    }
-
     /* Toast Notification */
     .toast {
       position: fixed;
@@ -641,10 +576,10 @@
             Board Verified
           </div>
           <div class="doc-buttons">
-            <button class="doc-btn primary" onclick="openDoc('SSLC Marksheet', 'SSLC.pdf')">
+            <a class="doc-btn primary" href="SSLC.pdf" target="_blank" rel="noopener noreferrer">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
               View
-            </button>
+            </a>
             <a class="doc-btn" href="SSLC.pdf" download="SSLC.pdf">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
               Get
@@ -688,10 +623,10 @@
             DigiLocker Verified
           </div>
           <div class="doc-buttons">
-            <button class="doc-btn primary" onclick="openDoc('PAN Card', 'PAN_.pdf')">
+            <a class="doc-btn primary" href="PAN_.pdf" target="_blank" rel="noopener noreferrer">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
               View
-            </button>
+            </a>
             <a class="doc-btn" href="PAN_.pdf" download="PAN_.pdf">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
               Get
@@ -735,10 +670,10 @@
             UIDAI Verified
           </div>
           <div class="doc-buttons">
-            <button class="doc-btn primary" onclick="openDoc('Aadhaar Card', 'AADHAR.pdf')">
+            <a class="doc-btn primary" href="AADHAR.pdf" target="_blank" rel="noopener noreferrer">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
               View
-            </button>
+            </a>
             <a class="doc-btn" href="AADHAR.pdf" download="AADHAR.pdf">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
               Get
@@ -782,10 +717,10 @@
             RTO Verified
           </div>
           <div class="doc-buttons">
-            <button class="doc-btn primary" onclick="openDoc('Driving Licence', 'DRIVING LICENCE.pdf')">
+            <a class="doc-btn primary" href="DRIVING LICENCE.pdf" target="_blank" rel="noopener noreferrer">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
               View
-            </button>
+            </a>
             <a class="doc-btn" href="DRIVING LICENCE.pdf" download="DRIVING LICENCE.pdf">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
               Get
@@ -802,22 +737,6 @@
 
   </div>
 
-  <!-- Document Viewer Modal -->
-  <div id="docModal" class="modal" role="dialog" aria-modal="true">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3 id="modalDocTitle">Document Preview</h3>
-        <div class="modal-actions">
-          <a id="modalDownloadBtn" class="doc-btn primary" download>Download</a>
-          <button class="doc-btn" onclick="closeDoc()">Close</button>
-        </div>
-      </div>
-      <div class="modal-body">
-        <iframe id="pdfFrame" src="" title="Document Preview"></iframe>
-      </div>
-    </div>
-  </div>
-
   <!-- Toast Notification -->
   <div id="toast" class="toast">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -827,34 +746,6 @@
   </div>
 
   <script>
-    // Modal Control
-    function openDoc(title, fileName) {
-      document.getElementById('modalDocTitle').innerText = title;
-      document.getElementById('pdfFrame').src = fileName;
-      const downloadBtn = document.getElementById('modalDownloadBtn');
-      downloadBtn.href = fileName;
-      downloadBtn.setAttribute('download', fileName);
-      document.getElementById('docModal').classList.add('active');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeDoc() {
-      document.getElementById('docModal').classList.remove('active');
-      document.getElementById('pdfFrame').src = '';
-      document.body.style.overflow = '';
-    }
-
-    window.onclick = function(event) {
-      const modal = document.getElementById('docModal');
-      if (event.target === modal) {
-        closeDoc();
-      }
-    };
-
-    window.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape') closeDoc();
-    });
-
     // Vector Eye State Toggles for Document Cards
     const eyeOpenSVG = '<path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle>';
     const eyeClosedSVG = '<path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"></path><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"></path><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"></path><line x1="1" y1="1" x2="23" y2="23"></line>';
